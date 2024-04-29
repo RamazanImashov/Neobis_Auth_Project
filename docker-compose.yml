@@ -1,0 +1,52 @@
+version: "3"
+services:
+    auth-postgres:
+      image: postgres:14
+      container_name: auth-postgres
+      restart: always
+      environment:
+        POSTGRES_DB: ${DB_NAME}
+        POSTGRES_USER: ${DB_USER}
+        POSTGRES_PASSWORD: ${DB_PASS}
+      ports:
+        - "5433:5432"
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+
+    redis:
+      image: redis
+      ports:
+        - "6379:6379"
+
+
+    django:
+      build: .
+      container_name: auth
+      ports:
+        - "8002:8002"
+      volumes:
+        - .:/app
+        - static_volume:/usr/src/app/back-static
+        - media_volume:/usr/src/app/back-media
+      restart: always
+      command: sh -c "python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:8002"
+      depends_on:
+        - auth-postgres
+        - redis
+
+    celery:
+      build: .
+      container_name: auth-celery
+      volumes:
+        - .:/usr/src/app
+      restart: always
+      command: celery -A config worker -l info
+      depends_on:
+        - django
+        - redis
+
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
