@@ -5,11 +5,7 @@ from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY')
-
 DEBUG = config("DEBUG", default=False)
-
-ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = 'account.User'
 
@@ -77,16 +73,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 #     }
 # }
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config('DB_NAME'),
-        'USER': config('DB_USER'),
-        "PASSWORD": config('DB_PASS'),
-        'HOST': config('DB_HOST'),
-        'PORT': 5432,
-    }
-}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -107,12 +93,6 @@ LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
 
-STATIC_URL = "/back-static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "back-static")
-
-MEDIA_URL = '/back-media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "back-media")
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -121,12 +101,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-
-
-Redis_Host = config("RedisHost")
-
-CELERY_BROKER_URL = f'redis://{Redis_Host}:6379'
-CELERY_RESULT_BACKEND = f'redis://{Redis_Host}:6379'
 
 
 JAZZMIN_SETTINGS = {
@@ -162,13 +136,3 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
 }
-
-
-CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
-
-CORS_ALLOW_CREDENTIALS = True
-
-CORS_ALLOW_METHODS = ['GЕT', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
-CORS_ALLOW_HEADERS = ['Authorization', 'Content-Type']
-
-
