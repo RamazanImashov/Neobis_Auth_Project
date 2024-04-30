@@ -1,14 +1,14 @@
 from pathlib import Path
 from decouple import config
 import os
-from datetime import timedelta
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+from .base import *
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
 
 ALLOWED_HOSTS = ["*"]
-
 
 DATABASES = {
     "default": {
