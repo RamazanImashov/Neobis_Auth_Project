@@ -1,5 +1,3 @@
-from pathlib import Path
-from decouple import config
 import os
 
 from .base import *
@@ -31,6 +29,8 @@ Redis_Host = config("RedisHost")
 
 CELERY_BROKER_URL = f'redis://{Redis_Host}:6379'
 CELERY_RESULT_BACKEND = f'redis://{Redis_Host}:6379'
+
+CSRF_TRUSTED_ORIGINS = ['http://164.92.173.248:80', 'http://164.92.173.248']
 
 
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
