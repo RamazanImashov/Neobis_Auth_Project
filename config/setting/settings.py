@@ -8,16 +8,16 @@ SECRET_KEY = config('SECRET_KEY')
 
 ALLOWED_HOSTS = ["*"]
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config('DB_NAME'),
-        'USER': config('DB_USER'),
-        "PASSWORD": config('DB_PASS'),
-        'HOST': config('DB_HOST'),
-        'PORT': 5432,
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": config('DB_NAME'),
+#         'USER': config('DB_USER'),
+#         "PASSWORD": config('DB_PASS'),
+#         'HOST': config('DB_HOST'),
+#         'PORT': 5432,
+#     }
+# }
 
 STATIC_URL = "/back-static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "back-static")
