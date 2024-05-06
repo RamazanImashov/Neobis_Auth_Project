@@ -3,6 +3,29 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
+from django.core.mail import EmailMessage
+
+
+class Util:
+    @staticmethod
+    def send_email(username, to_email, activation_code):
+        context = {
+            "text_detail": "Thank for registration",
+            "username": username,
+            "email": to_email,
+            "domain": "http://127.0.0.1:8002",
+            "activation_code": activation_code,
+        }
+        message_html = render_to_string("email_url.html", context)
+        message = strip_tags(message_html)
+        email = EmailMessage(
+            subject="Activation account",
+            from_email="admin@gmail.com",
+            body=message,
+            to=to_email,
+        )
+        email.send()
+
 
 def send_activation_code(username, email, activation_code):
     context = {

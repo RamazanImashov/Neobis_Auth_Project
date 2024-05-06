@@ -1,6 +1,6 @@
 from rest_framework.serializers import ValidationError
 from django.contrib.auth import get_user_model, authenticate
-from .tasks import send_activation_code, send_password
+from .tasks import send_activation_code, send_password, send_activation_code_celery
 from rest_framework import serializers
 
 
@@ -19,7 +19,7 @@ class RegisterValidator:
     @staticmethod
     def create(validated_data):
         user = User.objects.create_user(**validated_data)
-        send_activation_code(user.username, user.email, user.activation_code)
+        send_activation_code_celery(user.username, user.email, user.activation_code)
         return user
 
 

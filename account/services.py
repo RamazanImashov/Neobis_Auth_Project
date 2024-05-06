@@ -5,7 +5,8 @@ from .serializers import (
     ChangePasswordSerializer,
     ForgotPasswordCompleteSerializer
 )
-from .tasks import send_activation_code
+from .tasks import send_activation_code_celery
+from .tasks import Util
 from rest_framework import status
 from django.http import HttpResponse
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -80,7 +81,7 @@ class ForgotPasswordService:
         user.create_activation_code()
         user.save()
 
-        send_activation_code(user.username, user.email, user.activation_code)
+        send_activation_code_celery(user.username, user.email, user.activation_code)
         # return Response({"Код восстановления отправлен на ваш email."}, status=status.HTTP_200_OK)
 
 
