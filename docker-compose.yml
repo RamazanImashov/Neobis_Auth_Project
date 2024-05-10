@@ -30,6 +30,19 @@ services:
       volumes:
         - postgres_data:/var/lib/postgresql/data
 
+    nginx:
+      image: nginx
+      ports:
+        - 80:80
+        - 443:443
+      volumes:
+        - ./nginx/no_ssl/nginx.conf:/etc/nginx/conf.d/default.conf
+        - static_volume:/usr/src/app/back-static
+        - media_volume:/usr/src/app/back-media
+        - /etc/letsencrypt:/etc/letsencrypt
+      depends_on:
+        - django
+
     redis:
       image: redis
       ports:

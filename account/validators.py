@@ -1,6 +1,6 @@
 from rest_framework.serializers import ValidationError
 from django.contrib.auth import get_user_model, authenticate
-from .tasks import send_activation_code, send_password, send_activation_code_celery
+from .tasks import send_password_celery, send_activation_code_celery
 from rest_framework import serializers
 
 
@@ -111,7 +111,7 @@ class ForgotPasswordValidator:
         email = self.validated_data.get("email")
         user = User.objects.get(email=email)
         user.create_activation_code()
-        send_password(user.username, user.email, user.activation_code)
+        send_password_celery(user.username, user.email, user.activation_code)
 
 
 class ForgotPasswordCompleteValidator:
